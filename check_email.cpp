@@ -20,7 +20,7 @@ int main(){
 	std::string email;
 	std::cout << "Enter e-mail: ";
 	std::cin >> email;
-
+    
     if ((checkEmailFirstPart() > 0) || (checkEmailSecondPart() > 0)){
         std::cout << "Email is non-valid";
     } else {
