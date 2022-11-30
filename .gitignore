@@ -1,4 +1,4 @@
-.vscode/*
+.vscode/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -110,6 +110,7 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
+*.json
 
 # Chutzpah Test files
 _Chutzpah*
