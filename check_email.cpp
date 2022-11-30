@@ -30,30 +30,38 @@ return 0;
 }
 
 std::string select_fPart_email(std::string email){
-    std::string fPart_email;
-    for (int i; i < email.length(); i++){
-        if (email[i] == '@'){
-            break;
-        }
-        else {
-            fPart_email[i] = email[i];
-        }
-    }
+    
+    char const sep = '@';
+    std::string fPart_email = email.substr(0, email.find(sep));
+
 return fPart_email;
 }
 
 std::string select_sPart_email(std::string email){
-    std::string sPart_email;
-    for (int i = 0; i < email.length(); i++){
-
-    }
+    
+    char const sep = '@';
+    std::string sPart_email = email.substr(email.find(sep), email.length() - 1);
 
 return sPart_email;
 }
 
 int checkEmailFirstPart(std::string select_fPart_email){
     int fPart_errors = 0;
-
+    std::string t = fPart_email;
+    for (int i = 0; i < t.length(); i++) {
+        if (t[0] == '.' || t[sizeof-1] == '.'){
+            fPart_errors++;
+        }
+        if else (t[i] == t[i+1]) {
+            fPart_errors++;
+        }
+        if else (t.length() < 1 || t.length() > 64) {
+            fPart_errors++;
+        }
+        if else (t[i] != correctSymbols || (t[i] < 'a' && t[i] > 'z') || (t[i] < 'A' && t[i] > 'Z')
+                 || (t[i] < '0' && t[i] > '9')) {
+            fPart_errors++;
+        }
 
 return fPart_errors;
 }
