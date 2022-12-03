@@ -51,7 +51,7 @@ int checkEmailFirstPart(std::string fPart_email){
     int fPart_errors = 0;
     std::string t = fPart_email;
     for (int i = 0; i < t.length(); i++) {
-        if (t[0] == '.' || t[sizeof-1] == '.'){
+        if (t[0] == '.' || t[t.length() - 1] == '.'){
             fPart_errors++;
         }
         else if (t[i] == t[i+1]) {
@@ -60,8 +60,7 @@ int checkEmailFirstPart(std::string fPart_email){
         else if (t.length() < 1 || t.length() > 64) {
             fPart_errors++;
         }
-        else if (t[i] != &correctSymbols || (t[i] < 'a' && t[i] > 'z') || (t[i] < 'A' && t[i] > 'Z')
-                 || (t[i] < '0' && t[i] > '9')) {
+        else if () {
             fPart_errors++;
         }
     }
