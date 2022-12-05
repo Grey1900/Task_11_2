@@ -8,31 +8,31 @@
 #include <iostream>
 #include <string>
 
-int checkEmailFirstPart();
-int checkEmailSecondPart();
+int checkEmailFirstPart(std::string);
+int checkEmailSecondPart(std::string);
 
-std::string select_fPart_email();
-std::string select_sPart_email();
+std::string select_fPart_email(std::string);
+std::string select_sPart_email(std::string);
 
-std::string const &correctSymbols ("!#$%&'*+-/=?^_`{|}~");
+std::string const correctSymbols(".!#$%&'*+-/=?^_`{|}~");
 
-int main(){
-	std::string email;
-	std::cout << "Enter e-mail: ";
-	std::cin >> email;
-    
-    /*
-    if ((checkEmailFirstPart() > 0) || (checkEmailSecondPart() > 0)){
-        std::cout << "Email is non-valid";
+int main()
+{
+    std::string email;
+    std::cout << "Enter e-mail: ";
+    std::cin >> email;
+
+    if ((checkEmailSecondPart(select_sPart_email(email)) > 0)
+            && (checkEmailSecondPart(select_sPart_email(email)) > 0)){
+        std::cout << "E-mail is non-valid";
     } else {
-        std::cout << "Email is valid";
+        std::cout << "E-mail is valid";
     }
-    */
+
     return 0;
 }
 
 std::string select_fPart_email(std::string email){
-    
     char const sep = '@';
     std::string fPart_email = email.substr(0, email.find(sep));
 
@@ -40,35 +40,60 @@ std::string select_fPart_email(std::string email){
 }
 
 std::string select_sPart_email(std::string email){
-    
     char const sep = '@';
-    std::string sPart_email = email.substr(email.find(sep), email.length() - 1);
+    std::string sPart_email = email.substr(email.find(sep) + 1, email.length() - 1);
 
     return sPart_email;
 }
 
 int checkEmailFirstPart(std::string fPart_email){
-    int fPart_errors = 0;
+    int errors = 0, i = 0;
     std::string t = fPart_email;
-    for (int i = 0; i < t.length(); i++) {
-        if (t[0] == '.' || t[t.length() - 1] == '.'){
-            fPart_errors++;
-        }
-        else if (t[i] == t[i+1]) {
-            fPart_errors++;
-        }
-        else if (t.length() < 1 || t.length() > 64) {
-            fPart_errors++;
-        }
-        else if () {
-            fPart_errors++;
+
+    if (t[0] == '.' || t[t.length() - 1] == '.'){
+        errors++;
+    } else if (t[i] == '.' && t[i + 1] == '.'){
+        errors++;
+    } else if (t.length() < 1 || t.length() > 64){
+        errors++;
+    }
+
+    for (auto c : t){
+        if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z')){
+            continue;
+        } else {
+            for (auto f : correctSymbols){
+                if (c == f){
+                    break;
+                } else {
+                    errors++;
+                }
+                break;
+            }
         }
     }
-    return fPart_errors;
+    return errors;
 }
 
 int checkEmailSecondPart(std::string sPart_email){
-    int sPart_errors = 0;
+    int errors = 0, i = 0;
+    std::string t = sPart_email;
 
-    return sPart_errors;
+    if (t[0] == '.' || t[t.length() - 1] == '.'){
+        errors++;
+    } else if (t[i] == '.' && t[i + 1] == '.'){
+        errors++;
+    } else if (t.length() < 1 || t.length() > 63){
+        errors++;
+    }
+
+    for (auto c : t){
+        if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z')
+            || (c >= 'a' && c <= 'z') || c == '.' || c == '-'){
+            continue;
+        } else {
+            errors++;
+        }
+    }
+    return errors;
 }
