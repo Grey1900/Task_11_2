@@ -10,6 +10,7 @@
 
 int checkEmailFirstPart(std::string);
 int checkEmailSecondPart(std::string);
+int checkAt(std::string);
 
 std::string select_fPart_email(std::string);
 std::string select_sPart_email(std::string);
@@ -22,8 +23,10 @@ int main()
     std::cout << "Enter e-mail: ";
     std::cin >> email;
 
-    if ((checkEmailSecondPart(select_sPart_email(email)) > 0)
-            && (checkEmailSecondPart(select_sPart_email(email)) > 0)){
+    if (checkAt(email) != 1) {
+        std::cout << "E-mail is non-valid";
+    } else if ((checkEmailSecondPart(select_sPart_email(email)) > 0)
+                    && (checkEmailSecondPart(select_sPart_email(email)) > 0)){
         std::cout << "E-mail is non-valid";
     } else {
         std::cout << "E-mail is valid";
@@ -41,7 +44,7 @@ std::string select_fPart_email(std::string email){
 
 std::string select_sPart_email(std::string email){
     char const sep = '@';
-    std::string sPart_email = email.substr(email.find(sep) + 1, email.length() - 1);
+    std::string sPart_email = email.substr(email.find(sep), email.length() - 1);
 
     return sPart_email;
 }
@@ -81,6 +84,8 @@ int checkEmailSecondPart(std::string sPart_email){
 
     if (t[0] == '.' || t[t.length() - 1] == '.'){
         errors++;
+    } else if (t[0] != '@') {
+        errors++;
     } else if (t[i] == '.' && t[i + 1] == '.'){
         errors++;
     } else if (t.length() < 1 || t.length() > 63){
@@ -96,4 +101,15 @@ int checkEmailSecondPart(std::string sPart_email){
         }
     }
     return errors;
+}
+
+int checkAt(std::string email) {
+  int at = 0;
+
+  for (auto c : email){
+    if (c == '@') {
+      at++;
+    }
+  }
+  return at;
 }
