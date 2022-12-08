@@ -16,7 +16,7 @@ std::string select_fPart_email(std::string);
 std::string select_sPart_email(std::string);
 
 std::string const correctSymbols(".!#$%&'*+-/=?^_`{|}~");
-int len = correctSymbols.length();
+int len = correctSymbols.size();
 
 int main()
 {
@@ -24,11 +24,9 @@ int main()
     std::cout << "Enter e-mail: ";
     std::getline(std::cin, email);
 
-    int a = checkAt(email);
-    int b = checkEmailSecondPart(select_sPart_email(email));
-    int c = checkEmailSecondPart(select_sPart_email(email));
-
-    if (a == 1 && b == 0 && c == 0){
+    if (checkAt(email) == 1 
+            && checkEmailFirstPart(select_fPart_email(email)) == 0 
+            && checkEmailSecondPart(select_sPart_email(email)) == 0) {
         std::cout << "E-mail is valid";
     } else {
         std::cout << "E-mail is non-valid";
@@ -46,7 +44,7 @@ std::string select_fPart_email(std::string email){
 
 std::string select_sPart_email(std::string email){
     char const sep = '@';
-    std::string sPart_email = email.substr(email.find(sep) + 1, email.length() - 1);
+    std::string sPart_email = email.substr(email.find(sep) + 1, email.size() - 1);
 
     return sPart_email;
 }
@@ -55,20 +53,20 @@ int checkEmailFirstPart(std::string fPart_email){
     std::string t = fPart_email;
     int errors = 0, i = 0, s = t.size();
 
-    for (int i = 0; i < s; i++){
+        for (int i = 0; i < s; i++){
         char dot1, dot2;
         dot1 = t[i];
         dot2 = t[i+1];
-        if (dot1 == dot2) {
+        if (dot1 == '.' && dot1 == dot2) {
             errors++;
             break;
         }
     }
 
     if (errors == 0){
-        if (t[0] == '.' || t[t.length() - 1] == '.'){
+        if (t[0] == '.' || t[s - 1] == '.'){
             errors++;
-        } else (t.length() < 1 || t.length() > 64);{
+        } else if (s < 1 || s > 64){
             errors++;
         }
 
@@ -97,7 +95,7 @@ int checkEmailFirstPart(std::string fPart_email){
 
 int checkEmailSecondPart(std::string sPart_email){
     std::string t = sPart_email;
-    int errors = 0, i = 0, s = t.size();
+    int errors = 0, s = t.size();
 
 
     for (int i = 0; i < s; i++){
@@ -123,11 +121,7 @@ int checkEmailSecondPart(std::string sPart_email){
                         || c == '.' || c == '-'){
                     continue;
                 } else {
-                    i++;
-                    if (len == i){
-                        errors += 1;
-                        break;
-                    }
+                    errors++;
                 }
             }
         }
